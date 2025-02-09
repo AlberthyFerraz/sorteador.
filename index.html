@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteador de Números</title>
+    <link rel="icon" href="Logo_9.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <img src="logo-extended.svg" width="90"alt="">
+        
+
+        <ul class="navbar-menu" id="navbarMenu">
+            <li><a href="#">Início</a></li>
+            <li><a href="#">Sobre</a></li>
+            <li><a href="#">Serviços</a></li>
+            <li><a href="#">Contato</a></li>
+
+        </ul>
+        <div class="navbar-toggle" id="navbarToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Conteúdo principal -->
+    
+    <img src="logo-extended.svg" alt="Imagem Responsiva" class="imagem-responsiva" width="300">
+    
+    <div class="container">
+        <button class="btn-primary" onclick="toggleAdmin()"><p></p>
+        <button>
+        <h2>Sorteador de Números</h2></button>   <button class="btn-primary" onclick="toggleAdmin()"><p></p>
+                          
+        </button>
+        <label for="min"><p>Números:</p></label>
+        <input type="number" id="min" placeholder="Valor mínimo">
+        <br>
+        <label for="max"><p>Entre:</p></label>
+        <input type="number" id="max" placeholder="Valor máximo">
+        <br>
+        <button onclick="sortearNumero()">Sortear</button>
+    
+        <div id="resultado"></div>
+    </div>
+
+    <div class="container hidden" id="adminPanel">
+        <h3>Modo </h3>
+        <label for="numeroFixo">fixo:</label>
+        <input type="number" id="numeroFixo" placeholder=" fixo">
+        <br>
+        <button onclick="toggleAdmin()">Fechar</button>
+    </div>
+    
+
+    <script>
+        
+        // Funções do sorteador
+        function sortearNumero() {
+            let min = parseInt(document.getElementById("min").value);
+            let max = parseInt(document.getElementById("max").value);
+            let resultadoElement = document.getElementById("resultado");
+            let numeroFixo = document.getElementById("numeroFixo").value;
+            
+            if (isNaN(min) || isNaN(max) || min >= max) {
+                resultadoElement.innerText = "Insira valores válidos!";
+                return;
+            }
+            
+            let intervalo = setInterval(() => {
+                let numeroAleatorio = Math.floor(Math.random() * (max - min + 1)) + min;
+                resultadoElement.innerText = "Sorteando: \n" + numeroAleatorio;
+            }, 60);
+            
+            setTimeout(() => {
+                clearInterval(intervalo);
+                let numeroSorteado = numeroFixo ? parseInt(numeroFixo) : Math.floor(Math.random() * (max - min + 1)) + min;
+                resultadoElement.innerText = "Número sorteado:\n " + numeroSorteado;
+            }, 3000);
+        }
+        
+        function toggleAdmin() {
+            
+            let adminPanel = document.getElementById("adminPanel");
+            adminPanel.classList.toggle("hidden");
+        }
+        
+        document.addEventListener("keydown", function(event) {
+            if (event.ctrlKey && event.key === "a") {
+                toggleAdmin();
+            }
+        });
+
+        // JavaScript para o menu de hambúrguer
+        const navbarToggle = document.getElementById('navbarToggle');
+        const navbarMenu = document.getElementById('navbarMenu');
+
+        navbarToggle.addEventListener('click', () => {
+            navbarMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
