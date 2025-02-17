@@ -1,3 +1,28 @@
+<!DOCTYPE html> 
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteador de Números</title>
+    <link rel="icon" href="Logo_9.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <img src="logo-extended.svg" width="90" alt="">
+        <ul class="navbar-menu" id="navbarMenu">
+            <li><a href="#">Início</a></li>
+            <li><a href="#">Sobre</a></li>
+            <li><a href="#">Serviços</a></li>
+            <li><a href="#">Contato</a></li>
+        </ul>
+        <div class="navbar-toggle" id="navbarToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+    <img src="logo-extended.svg" alt="Imagem Responsiva" class="imagem-responsiva" width="300">
     <div class="container">
         <button class="btn-primary" onclick="toggleAdmin()"><p></p>
         <button>
@@ -14,3 +39,64 @@
     
         <div id="resultado"></div>
     </div>
+    <div class="container hidden" id="adminPanel">
+        <h3>Modo Admin</h3>
+        <label for="numeroFixo">Número fixo:</label>
+        <input type="number" id="numeroFixo" placeholder="Digite um número fixo">
+        <br>
+        <button onclick="toggleAdmin()">Fechar</button>
+    </div>
+    <script>
+        let sorteiosRealizados = 0;
+        
+        function sortearNumero() {
+            let min = parseInt(document.getElementById("min").value);
+            let max = parseInt(document.getElementById("max").value);
+            let resultadoElement = document.getElementById("resultado");
+            let numeroFixo = document.getElementById("numeroFixo").value;
+            
+            if (isNaN(min) || isNaN(max) || min >= max) {
+                resultadoElement.innerText = "Insira valores válidos!";
+                return;
+            }
+            
+            let intervalo = setInterval(() => {
+                let numeroAleatorio = Math.floor(Math.random() * (max - min + 1)) + min;
+                resultadoElement.innerText = "Sorteando: " + numeroAleatorio;
+            }, 60);
+            
+            setTimeout(() => {
+                clearInterval(intervalo);
+                let numeroSorteado;
+                
+                if (sorteiosRealizados < 3 || !numeroFixo) {
+                    numeroSorteado = Math.floor(Math.random() * (max - min + 1)) + min;
+                } else {
+                    numeroSorteado = parseInt(numeroFixo);
+                }
+                
+                sorteiosRealizados++;
+                resultadoElement.innerText = "Número sorteado: " + numeroSorteado;
+            }, 3000);
+        }
+        
+        function toggleAdmin() {
+            let adminPanel = document.getElementById("adminPanel");
+            adminPanel.classList.toggle("hidden");
+        }
+        
+        document.addEventListener("keydown", function(event) {
+            if (event.ctrlKey && event.key === "a") {
+                toggleAdmin();
+            }
+        });
+        
+        const navbarToggle = document.getElementById('navbarToggle');
+        const navbarMenu = document.getElementById('navbarMenu');
+        
+        navbarToggle.addEventListener('click', () => {
+            navbarMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
