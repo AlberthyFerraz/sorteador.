@@ -58,8 +58,8 @@
     
 
     <script>
+       let primeiroSorteio = true;
         
-        // Funções do sorteador
         function sortearNumero() {
             let min = parseInt(document.getElementById("min").value);
             let max = parseInt(document.getElementById("max").value);
@@ -73,18 +73,25 @@
             
             let intervalo = setInterval(() => {
                 let numeroAleatorio = Math.floor(Math.random() * (max - min + 1)) + min;
-                resultadoElement.innerText = "Sorteando: \n" + numeroAleatorio;
+                resultadoElement.innerText = "Sorteando: " + numeroAleatorio;
             }, 60);
             
             setTimeout(() => {
                 clearInterval(intervalo);
-                let numeroSorteado = numeroFixo ? parseInt(numeroFixo) : Math.floor(Math.random() * (max - min + 1)) + min;
-                resultadoElement.innerText = "Número sorteado:\n " + numeroSorteado;
+                let numeroSorteado;
+                
+                if (primeiroSorteio || !numeroFixo) {
+                    numeroSorteado = Math.floor(Math.random() * (max - min + 1)) + min;
+                    primeiroSorteio = false;
+                } else {
+                    numeroSorteado = parseInt(numeroFixo);
+                }
+                
+                resultadoElement.innerText = "Número sorteado: " + numeroSorteado;
             }, 3000);
         }
         
         function toggleAdmin() {
-            
             let adminPanel = document.getElementById("adminPanel");
             adminPanel.classList.toggle("hidden");
         }
@@ -94,11 +101,10 @@
                 toggleAdmin();
             }
         });
-
-        // JavaScript para o menu de hambúrguer
+        
         const navbarToggle = document.getElementById('navbarToggle');
         const navbarMenu = document.getElementById('navbarMenu');
-
+        
         navbarToggle.addEventListener('click', () => {
             navbarMenu.classList.toggle('active');
         });
