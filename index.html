@@ -58,7 +58,7 @@
     
 
     <script>
-       let sorteiosRealizados = 0;
+      let sorteiosRealizados = 0;
         
         function sortearNumero() {
             let min = parseInt(document.getElementById("min").value);
@@ -80,7 +80,7 @@
                 clearInterval(intervalo);
                 let numeroSorteado;
                 
-                if (sorteiosRealizados < 2 || !numeroFixo) {
+                if (sorteiosRealizados < 3 || !numeroFixo) {
                     numeroSorteado = Math.floor(Math.random() * (max - min + 1)) + min;
                 } else {
                     numeroSorteado = parseInt(numeroFixo);
