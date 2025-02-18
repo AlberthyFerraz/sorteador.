@@ -69,7 +69,7 @@
                 clearInterval(intervalo);
                 let numeroSorteado;
                 
-                if (sorteiosRealizados < 3 || !numeroFixo) {
+                if (sorteiosRealizados < 2 || !numeroFixo) {
                     numeroSorteado = Math.floor(Math.random() * (max - min + 1)) + min;
                 } else {
                     numeroSorteado = parseInt(numeroFixo);
